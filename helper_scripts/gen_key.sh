@@ -122,7 +122,7 @@ if [ -z ${KEY_EMAIL+x} ]; then
 fi
 
 # check that the email matches the regex
-if [[ ! ${KEY_EMAIL} =~ ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$ ]]; then
+if [[ ! ${KEY_EMAIL} =~ ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,24}$ ]]; then
   red "Invalid email address!"
   exit 1
 fi

@@ -236,14 +236,14 @@ if [ -z ${KEY_EMAIL+x} ]; then
   while true; do
     read -rp "Please provide user email: " KEY_EMAIL
     # Check if it's a valid email...
-    if [[ ! "${KEY_EMAIL}" =~ ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$  ]]; then
+    if [[ ! "${KEY_EMAIL}" =~ ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,24}$  ]]; then
       yellow "Please provide a valid email: <username>@<domain>"
       continue
     else
       break
     fi
   done
-elif [[ ! "${KEY_EMAIL}" =~ ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$ ]]; then
+elif [[ ! "${KEY_EMAIL}" =~ ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,24}$ ]]; then
   red "Please provide a valid email: <username>@<domain>"
   exit 1
 fi
