@@ -377,18 +377,18 @@ green "Subkeys successfully transferred to card"
 PUBLIC_KEY=$(gpg --homedir "${TMPDIR}" --export-options export-minimal --armor --export "${KEY_ID[0]}")
 
 # Upload public key to keyserver
-yellow """Upload yubikey to public openPGP keyserver? (recommended if you will not be using this in a company)"""
-if [ "${yesmode}" == "n" ]; then
-  read -r yn
-  case ${yn} in
-    [nN] ) red "Please make sure to save public key as it is not possible to extract it from the yubieky later!"
-    sleep 5;;
-    * )
-    CONFIRMATION_URL="$(echo "${PUBLIC_KEY}" | curl -T - https://keys.openpgp.org/ | grep http)" || { red "Unable to upload public key to server!"; exit 1; };
-  esac
-else
-  CONFIRMATION_URL="$(echo "${PUBLIC_KEY}" | curl -T - https://keys.openpgp.org/ | grep http)" || { red "Unable to upload public key to server!"; exit 1; };
-fi
+#yellow """Upload yubikey to public openPGP keyserver? (recommended if you will not be using this in a company)"""
+#if [ "${yesmode}" == "n" ]; then
+#  read -r yn
+#  case ${yn} in
+#    [nN] ) red "Please make sure to save public key as it is not possible to extract it from the yubieky later!"
+#    sleep 5;;
+#    * )
+#    CONFIRMATION_URL="$(echo "${PUBLIC_KEY}" | curl -T - https://keys.openpgp.org/ | grep http)" || { red "Unable to upload public key to server!"; exit 1; };
+#  esac
+#else
+#  CONFIRMATION_URL="$(echo "${PUBLIC_KEY}" | curl -T - https://keys.openpgp.org/ | grep http)" || { red "Unable to upload public key to server!"; exit 1; };
+#fi
 
 
 # Finally, change the attributes of the yubikey,
@@ -401,8 +401,7 @@ echo "Changing yubikey pins"
                                               --new-admin-pin "${ADMIN_PIN}" \
                                               --username "${KEY_USERNAME}" \
                                               --first-name "${FIRST_NAME}" \
-                                              --last-name "${LAST_NAME}" \
-                                              --key-url "https://keys.openpgp.org//vks/v1/by-fingerprint/${KEY_ID}" || { red "Failed to change yubikey attributes!"; exit 1; }
+                                              --last-name "${LAST_NAME}" || { red "Failed to change yubikey attributes!"; exit 1; }
 green "Yubikey attributes successfully changed."
 
 echo ""
@@ -410,9 +409,10 @@ echo ""
 green "public key:\n${PUBLIC_KEY}"
 green "Key password: \"${KEY_PASS}\""
 green "User pin: ${USER_PIN}"
+green "Admin pin: ${ADMIN_PIN}"
 
-yellow "Please visit the following url to confirm the public key:"
-echo "${CONFIRMATION_URL}"
+#yellow "Please visit the following url to confirm the public key:"
+#echo "${CONFIRMATION_URL}"
 
 # Remove TMPDIR
 green "Deleting TMPDIR: ${TMPDIR}"
