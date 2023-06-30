@@ -217,7 +217,7 @@ if [ -n "${NEW_USER_PIN+x}" ]; then
     if expect ${EXPECT_PARAMETERS} "
       set timeout 5
       set send_slow {10 .001}
-      spawn gpg --homedir \"${GNUPGHOME}' --pinentry-mode loopback --edit-card
+      spawn gpg --homedir ${GNUPGHOME} --pinentry-mode loopback --edit-card
       expect \"gpg/card>\"
       send -s \"admin\r\"
       expect \"gpg/card>\"
@@ -238,8 +238,7 @@ if [ -n "${NEW_USER_PIN+x}" ]; then
       }
       expect \"gpg/card>\"
       send -s \"q\r\"
-      expect eof
-      exit 0"; then
+      expect eof"; then
         green "Successfully changed user pin"
         CURRENT_USER_PIN=${NEW_USER_PIN}
     else
